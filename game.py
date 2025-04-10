@@ -75,8 +75,7 @@ def main():
     button_x = 300
     button_y = 125
     button = pygame.Rect(button_x, button_y, button_length, button_height)
-    surf_rect = surf.get_rect()
-    surf_rect.center = button.center
+    
     
 
     while running:
@@ -88,7 +87,8 @@ def main():
         # click_sound.play()
         
         # draw_text(screen, text, font_size, config.COLOR_BLACK, text_position,font_name)
-        
+        surf_rect = surf.get_rect()
+        surf_rect.center = button.center
 
         if button.collidepoint(mouse_x, mouse_y):
             button_color = config.COLOR_DARKCYAN

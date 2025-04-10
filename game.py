@@ -9,14 +9,21 @@ def init_game():
     pygame.display.set_caption(config.TITLE)
     return screen
 
-def handle_events(item_position):
+def handle_events(button):
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            return item_position, False
-        elif event.type == pygame.KEYDOWN:
+            return False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if button.collidepoint(event.pos):
+                pygame.quit()
+                sys.exit()
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 return False
-        
+    return True
+
+
+def wasd_keys(item_position):
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
         item_position[1] -= 4
@@ -26,12 +33,9 @@ def handle_events(item_position):
         item_position[0] -= 4
     if keys[pygame.K_d]:
         item_position[0] += 4
-        
-    return item_position, True
+    
+    return item_position,
 
-        
-    # return True
-        
 
 # text_font = pygame.font.Font(None, 30)
 
@@ -44,11 +48,11 @@ def draw_rect(screen, rect, color, thickness):
 def draw_circle(screen, center, radius, color, thickness):
     pygame.draw.circle(screen, color, center, radius, thickness)
 
-def draw_text(screen, text, font_size, text_col, text_pos, font_name=None, bold=False, italic=False):
+def draw_text(screen, text, font_size, text_col, text_pos, bold=False, italic=False, font_name=None):
     if font_name:
         font = pygame.font.Font(font_name, font_size)
     else:
-        font = pygame.font.Font(None, font_size)
+        font = pygame.font.Font(font_name)
 
     font.set_bold(bold)
     font.set_italic(italic)
@@ -60,21 +64,40 @@ def main():
     screen = init_game()
     clock = pygame.time.Clock()
     running = True
-
-    # font_name = pygame.font.Font('Arial', 30)
+    font_name = pygame.font.SysFont('Arial', 30)
+    surf = font_name.render('Quit', True, config.COLOR_BLACK)
+    
     text_position = [150, 100]
-    text = 'hi'
+    text = 'Im a button!'
     # click_sound = pygame.mixer.Sound('the sound')
+    button_length = 200
+    button_height = 60
+    button_x = 300
+    button_y = 125
+    button = pygame.Rect(button_x, button_y, button_length, button_height)
+    surf_rect = surf.get_rect()
+    surf_rect.center = button.center
+    
 
     while running:
-        running = handle_events(text_position)
+        running = handle_events(button)
         screen.fill(config.COLOR_WHITE)
-
+        wasd_keys(text_position)
+        mouse_x, mouse_y = pygame.mouse.get_pos()
         # Necessary for playing sounds
         # click_sound.play()
-            
-        draw_text(screen, text, 30, config.COLOR_BLACK, text_position)
         
+        # draw_text(screen, text, font_size, config.COLOR_BLACK, text_position,font_name)
+        
+
+        if button.collidepoint(mouse_x, mouse_y):
+            button_color = config.COLOR_DARKCYAN
+        else:
+            button_color = config.COLOR_ORANGERED
+        pygame.draw.rect(screen, button_color, button)
+        screen.blit(surf, surf_rect)
+
+
         # Calling a grid (Comment this out after you are done coding)
         grid(screen)
         

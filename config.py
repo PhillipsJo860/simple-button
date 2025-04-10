@@ -150,7 +150,7 @@ COLOR_YELLOWGREEN = (154, 205, 50)
 # Game window dimensions
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 600
-TITLE = 'TITLE'
+TITLE = 'Simple Button'
 
 # Grid for drawing
 topgrid_pos = {'start1': (1, 0), 'start2': (100, 0), 'start3': (200, 0), 'start4': (300, 0), 'start5': (400, 0), 'start6': (500, 0), 'start7': (600, 0), 'start8': (700, 0), 'start9': (799, 0), 'end1': (1, 20), 'end2': (100, 20), 'end3': (200, 20), 'end4': (300, 20), 'end5': (400, 20), 'end6': (500, 20), 'end7': (600, 20), 'end8': (700, 20), 'end9': (799, 20)}
